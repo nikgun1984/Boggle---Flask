@@ -1,0 +1,40 @@
+body{
+    border-radius: 5px;
+    background-color: #e3f5b1;
+    padding: 20px;
+    /* text-align: center; */
+    margin: 10px;
+}
+  
+td {
+    width: 10%;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    background: rgb(240, 180, 90);
+    border-radius: 10px;
+}
+
+td:after {
+    content: '';
+    display: block;
+    margin-top: 100%;
+}
+
+td .content {
+    position: absolute;
+    text-align: center;
+    top: 40%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#myBar {
+    width: 0%;
+}
+
+.jumbotron{
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
