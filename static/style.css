@@ -13,6 +13,7 @@ td {
     font-weight: bold;
     background: rgb(240, 180, 90);
     border-radius: 10px;
+    border-style: solid black;
 }
 
 td:after {
@@ -37,4 +38,27 @@ td .content {
 .jumbotron{
     padding-top: 20px !important;
     padding-bottom: 20px !important;
+}
+
+.modal {
+    text-align: center;
+}
+  
+@media screen and (min-width: 768px) { 
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }
+}
+  
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.box{
+    border: 5px black solid !important;
 }
