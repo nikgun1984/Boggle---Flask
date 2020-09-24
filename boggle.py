@@ -14,7 +14,7 @@ class Boggle():
         """Read and return all words in dictionary."""
 
         dict_file = open(dict_path)
-        words = [w.strip() for w in dict_file]
+        words = {w.strip() for w in dict_file}
         dict_file.close()
         return words
 
@@ -46,8 +46,8 @@ class Boggle():
 
     def find_from(self, board, word, y, x, seen):
         """Can we find a word on board, starting at x, y?"""
-
-        if x > 4 or y > 4:
+        limit = len(board)-1
+        if x > limit or y > limit:
             return
 
         # This is called recursively to find smaller and smaller words
@@ -96,7 +96,7 @@ class Boggle():
             if self.find_from(board, word[1:], y - 1, x, seen):
                 return True
 
-        if y < 4:
+        if y < limit:
             if self.find_from(board, word[1:], y + 1, x, seen):
                 return True
 
@@ -104,7 +104,7 @@ class Boggle():
             if self.find_from(board, word[1:], y, x - 1, seen):
                 return True
 
-        if x < 4:
+        if x < limit:
             if self.find_from(board, word[1:], y, x + 1, seen):
                 return True
 
@@ -113,15 +113,15 @@ class Boggle():
             if self.find_from(board, word[1:], y - 1, x - 1, seen):
                 return True
 
-        if y < 4 and x < 4:
+        if y < limit and x < limit:
             if self.find_from(board, word[1:], y + 1, x + 1, seen):
                 return True
 
-        if x > 0 and y < 4:
+        if x > 0 and y < limit:
             if self.find_from(board, word[1:], y + 1, x - 1, seen):
                 return True
 
-        if x < 4 and y > 0:
+        if x < limit and y > 0:
             if self.find_from(board, word[1:], y - 1, x + 1, seen):
                 return True
         # Couldn't find the next letter, so this path is dead

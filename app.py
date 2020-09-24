@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "123ab"
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 app.config["TESTING"] = True
-app.config["DEBUG_TB_HOSTS"] = ["dont-show-debug-toolbar"]
+# app.config["DEBUG_TB_HOSTS"] = ["dont-show-debug-toolbar"]
 
 debug  = DebugToolbarExtension(app)
 
