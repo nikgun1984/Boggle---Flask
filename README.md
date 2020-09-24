@@ -6,13 +6,13 @@ send responses back to the browser, JS/Jquery/Axios for front-end to send reques
 Using sessions the game will keep the best scores, number of games played. There is an option to select board dimensions. 
 
 <p align="center">
-  <img src="/static/sample.png" width="500" title="hover text">
+  <img src="/static/images/sample.png" width="500" title="hover text">
 </p>
 
 <p align="center">
-  <img src="/static/sample2.png" width="500" title="hover text">
+  <img src="/static/images/sample2.png" width="500" title="hover text">
 </p>
 
 <p align="center">
-  <img src="/static/sample3.png" width="500" title="hover text">
+  <img src="/static/images/sample3.png" width="500" title="hover text">
 </p>
