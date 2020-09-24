@@ -41,10 +41,13 @@ def search(num):
     return jsonify({'result': response})
 
 @app.route('/post_data', methods=['POST'])
-def hello():
+def post_data():
     """post number of games and best score"""
     json_data = request.json
+    print(json_data)
     total = int(json_data["total"])
+    print(total)
+    print(type(total))
     session["number"] = session.get("number",0)+1
     if session["total"] < total:
         session["total"] = total

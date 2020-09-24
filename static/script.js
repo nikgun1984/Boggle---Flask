@@ -1,14 +1,11 @@
-
-let total = 0,
-    i = 0;
+let total = 0;
 const words = new Set(),
-      messages = ["Good Job!!!", "Excellent!!!", "Superb!!!"],
-      $submitForm = $("#word-submit");
+      messages = ["Good Job!!!", "Excellent!!!", "Superb!!!"];
 
 //Start Timer
 move();
 
-$submitForm.on('submit', async function(e){
+$("#word-submit").on('submit', async function(e){
     await submitWord(e);
 });
 
@@ -20,7 +17,6 @@ function toggleMessage(message){
   $("#messages").addClass("alert alert-warning").show();
   $("#messages").text(message);
   $("#messages").delay(2000).slideUp(300);
-  $("input#word.form-control").val("");
   removeClass();
 }
 
@@ -31,19 +27,16 @@ function removeClass() {
   cells.forEach(cell => {
     cell.classList.remove('box');
   });
+  $("input#word.form-control").val("");
 }
 
 /* Timeset for a Game N */
 function move() {
-  if (i == 0) {
-    i = 1;
-    let elem = $("#myBar"),
-        width = 1,
+    let width = 0,
         id = setInterval(frame, 600);
     async function frame() {
       if (width >= 100) {
         clearInterval(id);
-        i = 0;
         $("h3#timesup").text("Game is over");
         $('input[type="text"]').prop('disabled', true);
         $('button[type="submit"]').prop('disabled', true);
@@ -59,11 +52,11 @@ function move() {
         $('#exampleModal').modal('show');
       } else {
         width++;
-        elem.width(width + "%").attr('aria-valuenow', width);
+        $("#myBar").width(width + "%").attr('aria-valuenow', width);
       }
     }
   }
-}
+//}
 
 /* Clicking on cells will add letters to the input*/
 function handleCells(){
@@ -75,7 +68,6 @@ function handleCells(){
     $("input#word.form-control").val($(this).text())
   } else if($(this).hasClass("box")){
     removeClass();
-    $("input#word.form-control").val()
   }
 }
 
