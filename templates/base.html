@@ -8,52 +8,7 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog">
-          <div class="modal-content">
-                <a href="/">
-                    <button type="button" class="btn btn-warning" >Restart Game...</button>
-                </a>
-            </div>
-          </div>
-        </div>
-    </div>
     <div class="container" id="game">
-        <h1 class="text-center m-3" id="logo"><img src="/static/boggle.png" alt="" style="width: 300px"></h1>
-        <div class="row justify-content-center" id="block">
-            <div class="col center-block text-center">
-                    <h4 class="display-6 m-5">Total Score:</h4>
-                    <div class="jumbotron ml-5 mr-5">
-                        <h3 id="total"></h3>
-                    </div>
-                    <h4 class="display-6 m-5">Last Word Score:</h4>
-                    <div class="jumbotron ml-5 mr-5">
-                        <h3 id="word_score"></h3>
-                    </div>
-            </div>
-            <div class="col-5">
-                <div class="text-center" id="messages"></div>
-                <table class="table table-bordered">
-                    {%for i in range(5)%}
-                    <tr>
-                        {% for j in range(5) %}
-                        <td><div class="content">{{board[i][j]}}</div></td>
-                        {% endfor%}
-                    </tr>
-                    {%endfor%}
-                </table>
-            </div>
-            <div class="col center-block text-center">
-                <h4 class="display-6 m-5">Best Score:</h4>
-                <div class="jumbotron ml-5 mr-5">
-                    <h3 id="highest">{{total}}</h3>
-                </div>
-                <h4 class="display-6 m-5">Number of Games:</h4>
-                <div class="jumbotron ml-5 mr-5">
-                    <h3 id="game_number">{{game_number}}</h3>
-                </div>
-            </div>
-        </div>
         {% block content %}
         {% endblock %}
     </div> 
@@ -68,5 +23,7 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
     </script>
     <script src="/static/script.js"></script>
+
+    {%block script%} {%endblock%}
 </body>
 </html>

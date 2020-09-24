@@ -7,7 +7,7 @@ import string
 class Boggle():
 
     def __init__(self):
-
+        
         self.words = self.read_dict("words.txt")
 
     def read_dict(self, dict_path):
@@ -18,22 +18,22 @@ class Boggle():
         dict_file.close()
         return words
 
-    def make_board(self):
+    def make_board(self, num):
         """Make and return a random boggle board."""
 
         board = []
 
-        for _ in range(5):
-            row = [choice(string.ascii_uppercase) for i in range(5)]
+        for _ in range(num):
+            row = [choice(string.ascii_uppercase) for i in range(num)]
             board.append(row)
 
         return board
 
-    def check_valid_word(self, board, word):
+    def check_valid_word(self, board, word, num):
         """Check if a word is a valid word in the dictionary and/or the boggle board"""
 
-        word_exists = word in self.words
-        valid_word = self.find(board, word.upper())
+        word_exists = word.lower() in self.words
+        valid_word = self.find(board, word.upper(), num)
 
         if word_exists and valid_word:
             result = "ok"
@@ -128,14 +128,14 @@ class Boggle():
 
         return False
 
-    def find(self, board, word):
+    def find(self, board, word, num):
         """Can word be found in board?"""
 
         # Find starting letter --- try every spot on board and,
         # win fast, should we find the word at that place.
 
-        for y in range(0, 5):
-            for x in range(0, 5):
+        for y in range(0, num):
+            for x in range(0, num):
                 if self.find_from(board, word, y, x, seen=set()):
                     return True
 

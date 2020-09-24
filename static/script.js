@@ -1,38 +1,45 @@
 
-const $submitForm = $("#word-submit");
-let total = 0;
-let i = 0;
-const words = new Set();
-const messages = ["Good Job!!!", "Excellent!!!", "Superb!!!"];
+let total = 0,
+    i = 0;
+const words = new Set(),
+      messages = ["Good Job!!!", "Excellent!!!", "Superb!!!"],
+      $submitForm = $("#word-submit");
+
+//Start Timer
 move();
+
 $submitForm.on('submit', async function(e){
-    e.preventDefault();
-    const word = $("input#word").val();
-    console.log(word);
-    const resp = await axios.get(`${window.origin}/check_valid_word`, { params: { word:word.toLowerCase()}});
-    if(resp.data.result==="ok"){
-        if(words.has(word)){
-          toggleMessage("You entered this word already...");
-          $("td.box").removeClass(".box");
-        } else{
-          words.add(word);
-          total += word.length;
-          $("h3#total").text(`${total}`);
-          $("h3#word_score").text(`${word.length}`);
-          toggleMessage(messages[Math.floor(Math.random()*messages.length)])
-          removeClass();
-        }
-    } else {
-        toggleMessage(resp.data.result);
-    }
+    await submitWord(e);
 });
 
+/*cell handler*/
+$("td").on('click',handleCells);
+
+/*Message will disappear after few seconds*/
+function toggleMessage(message){
+  $("#messages").addClass("alert alert-warning").show();
+  $("#messages").text(message);
+  $("#messages").delay(2000).slideUp(300);
+  $("input#word.form-control").val("");
+  removeClass();
+}
+
+/* Remove class box from the Game*/
+function removeClass() {
+  const cells = Array.from(document.querySelectorAll('tr td.box'));
+  console.log(cells);
+  cells.forEach(cell => {
+    cell.classList.remove('box');
+  });
+}
+
+/* Timeset for a Game N */
 function move() {
   if (i == 0) {
     i = 1;
-    var elem = $("#myBar");
-    var width = 1;
-    var id = setInterval(frame, 600);
+    let elem = $("#myBar"),
+        width = 1,
+        id = setInterval(frame, 600);
     async function frame() {
       if (width >= 100) {
         clearInterval(id);
@@ -58,28 +65,37 @@ function move() {
   }
 }
 
-// /*message will disappear after few seconds*/
-function toggleMessage(message){
-  $("#messages").addClass("alert alert-warning").show();
-  $("#messages").text(message);
-  $("#messages").delay(2000).slideUp(300);
-  $("input#word.form-control").val("");
+/* Clicking on cells will add letters to the input*/
+function handleCells(){
+  if($("input#word.form-control").val()!=='' && !$(this).hasClass("box")){
+    $(this).addClass("box");
+    $("input#word.form-control").val($("input#word.form-control").val() + $(this).text())
+  }else if($("input#word.form-control").val()==='' && !$(this).hasClass("box")){
+    $(this).addClass("box");
+    $("input#word.form-control").val($(this).text())
+  } else if($(this).hasClass("box")){
+    removeClass();
+    $("input#word.form-control").val()
+  }
 }
 
-$("td").on('click',function(){
-  $(this).addClass("box");
-  if($("input#word.form-control").val()!==''){
-    $("input#word.form-control").val($("input#word.form-control").val() + $(this).text())
-  }else{
-    $("input#word.form-control").val($(this).text())
+/* Checking for word if valid and send request to the server*/
+async function submitWord(e){
+  e.preventDefault();
+  const word = $("input#word").val().toLowerCase();
+  const boardDim = $("table").data('id');
+  const resp = await axios.get(`${window.origin}/${boardDim}/check_valid_word`, { params: { word}});
+  if(resp.data.result==="ok"){
+      if(words.has(word)){
+        toggleMessage("You entered this word already...");
+      } else{
+        words.add(word);
+        total += word.length;
+        $("h3#total").text(`${total}`);
+        $("h3#word_score").text(`${word.length}`);
+        toggleMessage(messages[Math.floor(Math.random()*messages.length)])
+      }
+  } else {
+      toggleMessage(resp.data.result);
   }
-  console.log($("input#word.form-control").val());
-});
-
-function removeClass() {
-  const cells = Array.from(document.querySelectorAll('tr td.box'));
-  console.log(cells);
-  cells.forEach(cell => {
-    cell.classList.remove('box');
-  });
 }
