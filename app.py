@@ -9,17 +9,17 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "123ab"
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 app.config["TESTING"] = True
-# app.config["DEBUG_TB_HOSTS"] = ["dont-show-debug-toolbar"]
+app.config["DEBUG_TB_HOSTS"] = ["dont-show-debug-toolbar"]
 
 debug  = DebugToolbarExtension(app)
 
 boggle_game = Boggle()
 words = set(boggle_game.words)
 
-@app.route('/welcome_screen')
+@app.route('/')
 def show_modal():
     """show modal window at the start"""
-    return render_template("welcome.html")
+    return render_template("index.html")
 
 @app.route('/<int:num>')
 def get_board(num):
@@ -30,7 +30,7 @@ def get_board(num):
     session["number"] = session.get("number",1)
     total = session["total"]
     game_number = session["number"]
-    return render_template('index.html', board=board, total=total, game_number = game_number, num=num)
+    return render_template('game.html', board=board, total=total, game_number = game_number, num=num)
 
 @app.route("/<int:num>/check_valid_word")
 def search(num):
@@ -43,11 +43,8 @@ def search(num):
 @app.route('/post_data', methods=['POST'])
 def post_data():
     """post number of games and best score"""
-    json_data = request.json
-    print(json_data)
-    total = int(json_data["total"])
-    print(total)
-    print(type(total))
+    total = int(request.json["total"])
+    # total = int(json_data["total"])
     session["number"] = session.get("number",0)+1
     if session["total"] < total:
         session["total"] = total
