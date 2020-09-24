@@ -11,6 +11,7 @@ class FlaskTests(TestCase):
         with app.test_client() as client:
 
             resp = client.get("/welcome_screen")
+            raise
             html = resp.get_data(as_text=True)
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h5 class="modal-title text-center">Choose Your Game:</h5>', html)
